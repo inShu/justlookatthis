@@ -1,0 +1,38 @@
+version: '3'
+services:
+  qtor:
+    image: "wernight/qbittorrent"
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+      - "6881:6881/tcp"
+      - "6881:6881/udp"
+    volumes:
+      - E:\torrents\tmp\config:/config
+      - E:\torrents\tmp\torrents:/torrents
+      - E:\torrents\finished:/downloads
+    networks:
+      - proxy
+
+  tor:
+    image: "dperson/torproxy"
+    restart: unless-stopped
+    networks:
+      - proxy
+
+  justlookatthis:
+    environment:
+      - BOT_TOKEN=
+      - BOT_USERS=
+    build: .
+    restart: unless-stopped
+    networks:
+      - proxy
+    depends_on:
+      - "tor"
+      - "qtor"
+
+
+networks:
+  proxy:
+    driver: bridge
