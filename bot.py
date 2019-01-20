@@ -46,7 +46,7 @@ class TorrentOwner:
 	def __init__(self, name, chat_id):
 		self.name = name
 		self.chat_id = chat_id
-		self.counter = 0
+		self.time = time.time()
 		self.half_report = False
 
 
@@ -106,6 +106,8 @@ class Torrent:
 				print("state_loop done")
 			except Exception as exp:
 				print("Caught exception in state_loop")
+				print("Traceback: " + traceback.format_exc())
+				print("Exception: " + str(exp))
 
 	def state_loop_imp(self):
 		while True:
@@ -121,12 +123,13 @@ class Torrent:
 									text=get_string("success_downloading") + "\"" + owner.name + "\". " + get_string("search_here") + item["save_path"].replace("/downloads/", "")
 								)
 								to_remove.append(owner)
-							if owner.counter == 12:
-								self.bot.send_message(chat_id=owner.chat_id, text=get_string("here_it_is") + self.format_torrent_report(item))
+							if owner.time is not None:
+								if (time.time() - owner.time) > 5:
+									self.bot.send_message(chat_id=owner.chat_id, text=get_string("here_it_is") + self.format_torrent_report(item))
+									owner.time = None
 							if (owner.half_report is False) and (item["progress"] > 0.5):
 								owner.half_report = True
 								self.bot.send_message(chat_id=owner.chat_id, text=get_string("half_report") + self.format_torrent_report(item))
-							owner.counter += 1
 
 				for rm in to_remove:
 					self.owners.remove(rm)
