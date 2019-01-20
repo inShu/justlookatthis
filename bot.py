@@ -124,7 +124,7 @@ class Torrent:
 								)
 								to_remove.append(owner)
 							if owner.time is not None:
-								if (time.time() - owner.time) > 5:
+								if (time.time() - owner.time) > 60:
 									self.bot.send_message(chat_id=owner.chat_id, text=get_string("here_it_is") + self.format_torrent_report(item))
 									owner.time = None
 							if (owner.half_report is False) and (item["progress"] > 0.5):
