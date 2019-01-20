@@ -8,9 +8,9 @@ services:
       - "6881:6881/tcp"
       - "6881:6881/udp"
     volumes:
-      - E:\torrents\tmp\config:/config
-      - E:\torrents\tmp\torrents:/torrents
-      - E:\torrents\finished:/downloads
+      - <CONFIG_FOLDER>:/config
+      - <TORRENTS_FOLDER>:/torrents
+      - <DOWNLOADS_FOLDER>:/downloads
     networks:
       - proxy
 

@@ -121,7 +121,7 @@ class Torrent:
 									text=get_string("success_downloading") + "\"" + owner.name + "\". " + get_string("search_here") + item["save_path"].replace("/downloads/", "")
 								)
 								to_remove.append(owner)
-							if owner.counter == 6:
+							if owner.counter == 12:
 								self.bot.send_message(chat_id=owner.chat_id, text=get_string("here_it_is") + self.format_torrent_report(item))
 							if (owner.half_report is False) and (item["progress"] > 0.5):
 								owner.half_report = True
@@ -131,7 +131,7 @@ class Torrent:
 				for rm in to_remove:
 					self.owners.remove(rm)
 
-			time.sleep(2)
+			time.sleep(5)
 
 	def get_qtor(self, url):
 		cookies = dict(SID=self.cookie)
@@ -477,8 +477,6 @@ class Torrent:
 	def get_state(self):
 		resp = self.get_qtor("query/torrents")
 
-		print(resp.text)
-
 		return json.loads(resp.text)
 
 	def format_torrent_report(self, current):
@@ -530,7 +528,7 @@ strings =\
 						   "* Я работаю через Tor, поэтому некоторые запросы могут выполняться ни одну и ни две секунды. Когда ты выбрал что-то из предложенного мной списка действий,"\
 						   " будь любезен, прояви терпение и подожди, не надо затыкивать меня до полу-смерти, это не ускорит процесс.\n"\
 						   "* Через минуту, после начала закачки я отпишусь о том как идут дела. Также я сообщу, когда скачаю половину торрента и когда закончу скачивание.\n"\
-						   "У каждого торрента в квадратных скобках указывается какой-то набор букв, например: ['ППД', 'О', 'СС']. Это наркоманские, но весьма эффективные сокращения с сайта cinemate.cc:\n"\
+						   "У каждого торрента в квадратных скобках указывается какой-то набор букв, например: ['ППД', 'О', 'С']. Это наркоманские, но весьма эффективные сокращения с сайта cinemate.cc:\n"\
 						   "ППД - Дублях\nАО - Авторский, одноголосный\nЛО - Любительский, одноголосный\nО - оригинальная дорожка\nС - субтитры\n3D - 5.1 и всё такое\n"
 						   "ПМЗ - професионнальный многоголосный, закадровый\nTS - дубляж, но из кинотеатра, хрум-хрум"],
 				"searching_hard": [u"Ну всё, я пошёл усиленно искать, скоро будут результаты..."],
