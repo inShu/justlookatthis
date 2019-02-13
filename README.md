@@ -1,5 +1,6 @@
 This is a pretty simple telegram bot which allows you do download torrents which were announced on cinemate.cc
-We are using python telegram bot framework, tor and qbitorrent. So you don't need any vpn
+We are using python telegram bot framework, tor and qbitorrent. So you don't need any vpn.
+
 In case you don't have telegram bot please reach @BotFather to get one.
 Before you hit "docker-compose up -d", please do next:
 * In docker-compose.yml define BOT_TOKEN with HTTP API token of your bot
